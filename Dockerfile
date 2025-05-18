@@ -3,7 +3,6 @@ FROM python:3.12
 WORKDIR /app
 
 COPY ./core ./core
-COPY ./logs ./logs
 COPY ./resources ./resources
 COPY main.py ./
 COPY requirements.txt ./
