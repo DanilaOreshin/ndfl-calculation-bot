@@ -3,6 +3,7 @@ from aiogram.types import Message
 
 from core import functions as f
 from core import messages as m
+from core.logger import logger
 
 
 # handlers
@@ -18,6 +19,7 @@ async def about_command_handler(message: Message):
 
 async def net_command_handler(message: Message, command: CommandObject):
     validate_result = f.validate(command.args)
+    logger.debug(f'Inner value = {validate_result:.2f}')
     if type(validate_result) is not float:
         text = m.validation_error_text + f'{validate_result}'
     else:
@@ -30,6 +32,7 @@ async def net_command_handler(message: Message, command: CommandObject):
 
 async def gross_command_handler(message: Message, command: CommandObject):
     validate_result = f.validate(command.args)
+    logger.debug(f'Inner value = {validate_result:.2f}')
     if type(validate_result) is not float:
         text = m.validation_error_text + f'{validate_result}'
     else:

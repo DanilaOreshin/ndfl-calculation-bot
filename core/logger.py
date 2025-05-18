@@ -1,7 +1,6 @@
 import logging
 
-logging.basicConfig(level=logging.ERROR,
-                    filename='logs/log.log',
+logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 logger = logging.getLogger()
