@@ -1,7 +1,7 @@
 from aiogram.filters import CommandObject
 from aiogram.types import Message
 
-import core.functions as f
+from core import functions as f
 from core import messages as m
 
 
@@ -17,18 +17,26 @@ async def about_command_handler(message: Message):
 
 
 async def net_command_handler(message: Message, command: CommandObject):
-    net_sum = float(command.args.replace(" ", ""))
-    gross_sum = f.calculate_gross_sum(net_sum)
-    result_list = f.calculate_net_by_month(gross_sum)
-    text = f.get_report_text(gross_sum, net_sum, result_list)
+    validate_result = f.validate(command.args)
+    if type(validate_result) is not float:
+        text = m.validation_error_text + f'{validate_result}'
+    else:
+        net_sum = validate_result
+        gross_sum = f.calculate_gross_sum(net_sum)
+        result_list = f.calculate_net_by_month(gross_sum)
+        text = f.get_report_text(gross_sum, net_sum, result_list)
     await message.answer(text)
 
 
 async def gross_command_handler(message: Message, command: CommandObject):
-    gross_sum = float(command.args.replace(" ", ""))
-    net_sum = f.calculate_net_sum(gross_sum)
-    result_list = f.calculate_net_by_month(gross_sum)
-    text = f.get_report_text(gross_sum, net_sum, result_list)
+    validate_result = f.validate(command.args)
+    if type(validate_result) is not float:
+        text = m.validation_error_text + f'{validate_result}'
+    else:
+        gross_sum = validate_result
+        net_sum = f.calculate_net_sum(gross_sum)
+        result_list = f.calculate_net_by_month(gross_sum)
+        text = f.get_report_text(gross_sum, net_sum, result_list)
     await message.answer(text)
 
 

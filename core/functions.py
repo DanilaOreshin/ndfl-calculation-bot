@@ -1,12 +1,17 @@
+from core import messages as m
+
 LIMITS_LIST = [2_400_000.00, 5_000_000.00, 20_000_000.00, 50_000_000.00]
 PERCENTS_LIST = [13.00, 15.00, 18.00, 20.00, 22.00]
+
+MAX_YEAR_GROSS = 1_000_000_000_000.00
+MAX_FLOAT_VALUE = 100_000_000.00
 
 
 def separate_gross_sum(gross_sum: float) -> list[float]:
     tmp_sum = gross_sum * 12
     separated_list = []
     i = 1
-    tmp_limits_list = [0.00] + LIMITS_LIST + [1_000_000_000_000.00]
+    tmp_limits_list = [0.00] + LIMITS_LIST + [MAX_YEAR_GROSS]
     while tmp_sum > 0:
         tmp_delta = tmp_limits_list[i] - tmp_limits_list[i - 1]
         tmp_remainder = tmp_sum - tmp_delta
@@ -32,7 +37,7 @@ def separate_net_sum(net_sum: float) -> list[float]:
     tmp_sum = net_sum * 12
     separated_list = []
     i = 1
-    tmp_limits_list = [0.00] + LIMITS_LIST + [1_000_000_000_000.00]
+    tmp_limits_list = [0.00] + LIMITS_LIST + [MAX_YEAR_GROSS]
     while tmp_sum > 0:
         tmp_delta = (tmp_limits_list[i] - tmp_limits_list[i - 1]) * (100 - PERCENTS_LIST[i - 1]) / 100
         tmp_remainder = tmp_sum - tmp_delta
@@ -57,7 +62,7 @@ def calculate_gross_sum(net_sum: float) -> float:
 def calculate_net_by_month(gross_sum: float) -> list[float]:
     i = 0
     count = 0
-    tmp_limits_list = LIMITS_LIST + [1_000_000_000_000.00]
+    tmp_limits_list = LIMITS_LIST + [MAX_YEAR_GROSS]
     tmp_delta = tmp_limits_list[i]
     result_list = list()
     while count < 12:
@@ -101,3 +106,14 @@ def get_report_text(gross_sum: float, net_sum: float, report_list: list[float]) 
 
     text = text.replace(',', ' ')
     return text
+
+
+def validate(raw_str: str):
+    try:
+        float_value = float(raw_str.replace(" ", ""))
+    except ValueError:
+        return m.invalid_format_error_text
+    if float_value <= 0 or float_value >= MAX_FLOAT_VALUE:
+        return m.invalid_number_error_text + f'{MAX_FLOAT_VALUE:_.0f}'.replace("_", " ")
+    else:
+        return float_value
