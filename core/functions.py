@@ -109,6 +109,8 @@ def get_report_text(gross_sum: float, net_sum: float, report_list: list[float]) 
 
 
 def validate(raw_str: str):
+    if raw_str is None:
+        return m.no_value_error_text
     try:
         float_value = float(raw_str.replace(" ", ""))
     except ValueError:
