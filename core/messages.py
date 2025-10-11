@@ -1,4 +1,4 @@
-import core.bot_config as cfg
+from core.bot_config import config
 
 welcome_text = 'Добро пожаловать! 🎉\n ' \
                '\n' \
@@ -13,8 +13,8 @@ welcome_text = 'Добро пожаловать! 🎉\n ' \
 
 about_text = f'О боте:\n' \
              f'\n' \
-             f'Версия: {cfg.BOT_VERSION}\n' \
-             f'Автор: {cfg.BOT_AUTHOR}\n'
+             f'Версия: {config.BOT_VERSION}\n' \
+             f'Автор: {config.BOT_AUTHOR}\n'
 
 default_text = f'Неверное действие!\n' \
                f'\n' \

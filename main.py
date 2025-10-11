@@ -5,7 +5,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
 
-import core.bot_config as cfg
+from core.bot_config import config
 import core.handlers as h
 from core.menu_config import set_commands
 
@@ -15,7 +15,7 @@ async def set_up(bot: Bot):
 
 
 async def start():
-    bot = Bot(token=cfg.BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    bot = Bot(token=config.BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     dp = Dispatcher()
 
