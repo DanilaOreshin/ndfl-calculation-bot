@@ -1,4 +1,4 @@
-from core.bot_config import config
+from core.config import config
 
 welcome_text = 'Добро пожаловать! 🎉\n ' \
                '\n' \
@@ -26,11 +26,12 @@ default_text = f'Неверное действие!\n' \
                f'🔸 /net\n' \
                f'🔸 /gross\n'
 
-validation_error_text = 'Возникла ошибка при обработке запроса! ⛔️\nПричина: '
+validation_error_text = '⛔️ Возникла ошибка при обработке запроса!\n' \
+                        'Причина: '
 
 no_value_error_text = 'Число не передано!'
 
 invalid_format_error_text = 'Неверный формат! Переданное значение не является числом!'
 
-invalid_number_error_text = 'Переданное число выходит за рамки допустимого диапазона!' \
+invalid_number_error_text = 'Переданное число выходит за рамки допустимого диапазона!\n' \
                             'Переданное число должно быть больше 0 и меньше '

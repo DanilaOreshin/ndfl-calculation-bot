@@ -5,7 +5,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
 
-from core.bot_config import config
+from core.config import config
 import core.handlers as h
 from core.menu_config import set_commands
 

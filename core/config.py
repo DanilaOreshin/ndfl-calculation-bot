@@ -9,7 +9,7 @@ class Config:
 
         self.BOT_TOKEN = self._get_required("BOT_TOKEN")
         self.ADMIN_ID = self._get_required('ADMIN_ID')
-        self.BOT_DEVELOPER = self._get_required('BOT_AUTHOR')
+        self.BOT_AUTHOR = self._get_required('BOT_AUTHOR')
         self.BOT_VERSION = self._get_required('BOT_VERSION')
 
     def _get_required(self, key: str) -> str:
