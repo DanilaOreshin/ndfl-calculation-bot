@@ -1,7 +1,9 @@
 services:
   ndfl-calculation-bot:
     build: .
+    image: ndfl-calculation-bot:latest
     container_name: ndfl-calculation-bot
+    restart: always
     environment:
       - BOT_DEVELOPER=BOT_DEVELOPER
       - BOT_VERSION=BOT_VERSION
