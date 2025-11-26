@@ -1,13 +1,13 @@
 FROM python:3.13
 
-WORKDIR /opt/ndfl-calculation-bot
+WORKDIR /app
 
 COPY requirements.txt .
-RUN /venv/bin/pip install --no-cache-dir -r requirements.txt
+RUN /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
 
 COPY src ./src
 COPY main.py .
 
-RUN python3 -m venv /venv
+RUN python3 -m venv /opt/venv
 
-CMD ["/venv/bin/python", "main.py"]
+CMD ["/opt/venv/bin/python", "main.py"]
