@@ -1,67 +1,15 @@
-from typing import Union
+from src.config.bot_config import config as cfg
 
-from core import messages as m
-
-LIMITS_LIST = [2_400_000.00, 5_000_000.00, 20_000_000.00, 50_000_000.00]
-PERCENTS_LIST = [13.00, 15.00, 18.00, 20.00, 22.00]
-
-MAX_YEAR_GROSS = 1_000_000_000_000.00
-MAX_FLOAT_VALUE = 100_000_000.00
-
-
-def separate_gross_sum(gross_sum: float) -> list[float]:
-    tmp_sum = gross_sum * 12
-    separated_list = []
-    limits = [0.0] + LIMITS_LIST + [MAX_YEAR_GROSS]
-
-    for i in range(1, len(limits)):
-        if tmp_sum <= 0: break
-        gross_delta = limits[i] - limits[i - 1]
-        amount = min(gross_delta, tmp_sum)
-        separated_list.append(amount)
-        tmp_sum -= amount
-
-    return separated_list
-
-
-def calculate_net_sum(gross_sum: float) -> float:
-    net_sum = sum(
-        elem * (100 - percent) / 100
-        for elem, percent in zip(separate_gross_sum(gross_sum), PERCENTS_LIST)
-    )
-    return net_sum / 12
-
-
-def separate_net_sum(net_sum: float) -> list[float]:
-    tmp_sum = net_sum * 12
-    separated_list = []
-    limits = [0.0] + LIMITS_LIST + [MAX_YEAR_GROSS]
-
-    for i in range(1, len(limits)):
-        if tmp_sum <= 0: break
-        net_delta = (limits[i] - limits[i - 1]) * (1 - PERCENTS_LIST[i - 1] / 100)
-        amount = min(net_delta, tmp_sum)
-        separated_list.append(amount)
-        tmp_sum -= amount
-
-    return separated_list
-
-
-def calculate_gross_sum(net_sum: float) -> float:
-    gross_sum = sum(
-        elem / (1 - percent / 100)
-        for elem, percent in zip(separate_net_sum(net_sum), PERCENTS_LIST)
-    )
-    return gross_sum / 12
+from src.texts import messages as m
 
 
 def calculate_net_amount(amount: float, percent_idx: int) -> float:
-    return amount * (1 - PERCENTS_LIST[percent_idx] / 100)
+    return amount * (1 - cfg.PERCENTS_LIST[percent_idx] / 100)
 
 
 def calculate_net_by_month(gross_sum: float) -> list[float]:
     result = []
-    limits = LIMITS_LIST + [MAX_YEAR_GROSS]
+    limits = cfg.LIMITS_LIST + [cfg.MAX_YEAR_GROSS]
     remaining = limits[0]
     percent_idx = 0
 
@@ -113,15 +61,15 @@ def get_report_text(gross_sum: float, net_sum: float, report_list: list[float]) 
     return '\n'.join(text)
 
 
-def validate(raw_input: str) -> Union[float, str]:
+def validate(raw_input: str) -> float | str:
     if not raw_input.strip():
-        return m.no_value_error_text
+        return m.NO_VALUE_REASON_TEXT
     try:
         float_value = float(raw_input.replace(' ', ''))
     except ValueError:
-        return m.invalid_format_error_text
-    if not 0 < float_value < MAX_FLOAT_VALUE:
-        formatted_max = f'{MAX_FLOAT_VALUE:,.0f}'.replace(',', ' ')
-        return f'{m.invalid_number_error_text}{formatted_max}'
+        return m.INVALID_FORMAT_REASON_TEXT
+    if not 0 < float_value < cfg.MAX_FLOAT_VALUE:
+        formatted_max = f'{cfg.MAX_FLOAT_VALUE:,.0f}'.replace(',', ' ')
+        return m.INVALID_RANGE_REASON_TEXT.format(max_value=formatted_max)
     else:
         return float_value

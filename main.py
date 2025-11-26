@@ -5,9 +5,10 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
 
-from core.config import config
-import core.handlers as h
-from core.menu_config import set_commands
+from src.config.bot_config import config as cfg
+from src.config.menu_config import set_commands
+from src.handlers import command_handlers as ch
+from src.handlers.basic_handlers import default_handler
 
 
 async def set_up(bot: Bot):
@@ -15,7 +16,7 @@ async def set_up(bot: Bot):
 
 
 async def start():
-    bot = Bot(token=config.BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    bot = Bot(token=cfg.BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     dp = Dispatcher()
 
@@ -23,13 +24,13 @@ async def start():
     dp.startup.register(set_up)
 
     # command handlers
-    dp.message.register(h.start_command_handler, Command(commands=['start']))
-    dp.message.register(h.about_command_handler, Command(commands=['about']))
-    dp.message.register(h.net_command_handler, Command(commands=['net']))
-    dp.message.register(h.gross_command_handler, Command(commands=['gross']))
+    dp.message.register(ch.start_command_handler, Command(commands=['start']))
+    dp.message.register(ch.about_command_handler, Command(commands=['about']))
+    dp.message.register(ch.net_command_handler, Command(commands=['net']))
+    dp.message.register(ch.gross_command_handler, Command(commands=['gross']))
 
     # default handlers
-    dp.message.register(h.default_handler)
+    dp.message.register(default_handler)
 
     try:
         await dp.start_polling(bot)

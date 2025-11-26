@@ -1,0 +1,9 @@
+services:
+  ndfl-calculation-bot:
+    build: .
+    container_name: ndfl-calculation-bot
+    environment:
+      - BOT_DEVELOPER=
+      - BOT_VERSION=
+      - BOT_TOKEN=
+      - BOT_ADMIN_ID=4
