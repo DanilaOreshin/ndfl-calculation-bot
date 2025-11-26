@@ -1,4 +1,4 @@
-from src.config.bot_config import config
+from src.config.bot_config import config as cfg
 
 # default
 DEFAULT_TEXT = ('Неверное действие!\n\n'
@@ -18,8 +18,8 @@ WELCOME_TEXT = ('Добро пожаловать! 🎉\n\n'
                 'Например, <code>/gross 250000.00</code>\n')
 
 ABOUT_TEXT = (f'О боте:\n\n'
-              f'Версия: {config.BOT_VERSION}\n'
-              f'Автор: {config.BOT_AUTHOR}\n')
+              f'Версия: {cfg.BOT_VERSION}\n'
+              f'Автор: {cfg.BOT_DEVELOPER}\n')
 
 # error
 VALIDATION_ERROR_TEXT = ('⛔️ Возникла ошибка при обработке запроса!\n'

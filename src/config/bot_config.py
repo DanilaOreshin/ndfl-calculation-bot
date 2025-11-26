@@ -8,10 +8,9 @@ class BotConfig:
 
         load_dotenv()
 
-        self.BOT_TOKEN = self._get_required("BOT_TOKEN")
-        self.BOT_ADMIN_ID = int(self._get_required('BOT_ADMIN_ID'))
         self.BOT_DEVELOPER = self._get_required('BOT_DEVELOPER')
         self.BOT_VERSION = self._get_required('BOT_VERSION')
+        self.BOT_TOKEN = self._get_required("BOT_TOKEN")
 
         self.LIMITS_LIST = [2_400_000.00, 5_000_000.00, 20_000_000.00, 50_000_000.00]
         self.PERCENTS_LIST = [13.00, 15.00, 18.00, 20.00, 22.00]
